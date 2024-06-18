@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OS on CyberJunk</title>
+    <link>https://nico.moe/tags/os/</link>
+    <description>Recent content in OS on CyberJunk</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 16 Nov 2022 14:41:51 +0800</lastBuildDate>
+    <atom:link href="https://nico.moe/tags/os/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Network Programming Model</title>
+      <link>https://nico.moe/posts/network-programming-model/</link>
+      <pubDate>Wed, 16 Nov 2022 14:41:51 +0800</pubDate>
+      <guid>https://nico.moe/posts/network-programming-model/</guid>
+      <description>Blocking and Non-blocking I/O The focus of &amp;ldquo;blocking&amp;rdquo; and &amp;ldquo;non-blocking&amp;rdquo; I/O is how user programs handle situations when data is not ready in the kernel.&#xA;Blocking I/O (BIO) When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.&#xA;When try to write, if the data cannot be written (e.g., buffer is full), OS blocks and waits until it can write.</description>
+    </item>
+  </channel>
+</rss>

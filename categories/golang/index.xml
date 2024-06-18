@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GoLang on CyberJunk</title>
+    <link>https://nico.moe/categories/golang/</link>
+    <description>Recent content in GoLang on CyberJunk</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 20 Oct 2023 14:31:37 +0800</lastBuildDate>
+    <atom:link href="https://nico.moe/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Some notes on Receivers</title>
+      <link>https://nico.moe/posts/some-notes-on-receivers/</link>
+      <pubDate>Fri, 20 Oct 2023 14:31:37 +0800</pubDate>
+      <guid>https://nico.moe/posts/some-notes-on-receivers/</guid>
+      <description>Review of receivers When a value receiver is defined, Go automatically generates a corresponding pointer receiver.&#xA;Auto-generating a pointer receiver causes differences in the method sets of pointer types and value types.&#xA;For example, take the Len() method below, Go will automatically generate a corresponding pointer receiver version:&#xA;type List []int func (l List) Len() int { return len(l) } // func (l *List) Len() int { ... } func (l *List) Append(val int) { *l = append(*l, val) } For type List, its method set includes:</description>
+    </item>
+  </channel>
+</rss>

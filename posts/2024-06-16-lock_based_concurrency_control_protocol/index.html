@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type=text/css>body{font-family:monospace;}</style>
+	<title>Lock Based Concurrency Control Protocol</title>
+	
+	
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+</head>
+<body>
+	<header>
+	===============<br>
+	== <a href="http://localhost:1313/">CyberJunk</a> ==<br>
+	===============
+	<div style="float: right;">Made with 😭</div><br>
+	<p>
+	<nav>
+			<a href="/"><b>Home</b></a>.
+			
+			
+			<a href="/posts/"><b>Posts</b></a>.
+			
+			<a href="/categories/"><b>Categories</b></a>.
+			
+			<a href="/tags/"><b>Tags</b></a>.
+			
+			<a href="https://github.com/slk000"><b>Github</b></a>.
+			
+	</nav>
+	</p>
+	
+	<hr />
+</header>
+
+	
+	<main>
+		<article>
+			<h1>Lock Based Concurrency Control Protocol</h1>
+			<b><time>2024.06.16 16:10</time></b>
+		       
+		           <a href="/tags/default">default</a>
+        	       
+
+			<div>
+				<p>&ldquo;Lock-Based Concurrency Control&rdquo; and &ldquo;Multiversion Concurrency Control&rdquo; are two different approaches to implementing transaction isolation levels. This article will introduce the former one.</p>
+<p>In two-phase locking, a transaction is divided into the <strong>growing phase</strong> for acquiring locks and the <strong>shrinking phase</strong> for releasing locks. Different rules and restrictions can be set in different phases to achieve different isolation levels. For example:</p>
+<ol>
+<li>Do you need a lock to read? What type of lock is needed to read?</li>
+<li>When to unlock?</li>
+</ol>
+<p>When writing data, transactions at all isolation levels always require an X lock, which is unlocked at the end of the transaction. This prevents  <strong>dirty writes</strong>, which are not allowed in databases, from occurring between two write transactions. Therefore, X locks may be used at all isolation levels, but S locks are not always required.</p>
+<hr>
+<p><strong>READ UNCOMMITTED</strong></p>
+<ol>
+<li>Transactions do not need an S lock when reading data, only an X lock when writing data. This allows the current transaction&rsquo;s read operations not to be blocked by other transactions&rsquo; X locks;</li>
+<li>The X lock is released at the end of the transaction, marking the transition to the shrinking phase.</li>
+</ol>
+<p>Since read operations hold NO LOCKS AT ALL, X locks will not block them, data modified by other transactions can be read at any time, leading to the <strong>dirty read</strong> problem.</p>
+<hr>
+<p><strong>READ COMMITTED</strong></p>
+<ol>
+<li>The current transaction needs an S lock when reading data to block subsequent modifications by other transactions. Similarly, if another transaction has already acquired an X lock and modified the data, the current transaction&rsquo;s acquisition of the S lock will be blocked until the X lock is released.</li>
+<li>The X lock is released at the end of the transaction, marking the transition to the shrinking phase. Releasing the S lock does not change the transaction&rsquo;s phase, so it can be released at any time (?)</li>
+</ol>
+<p>READ COMMITTED resolves the dirty read problem: the S lock is blocked by the X lock + the X lock is released only at the end of the transaction = only after committed/rolled-back data can be read. However, it does not resolve the non-repeatable read problem: after the current transaction reads the data, it can release the S lock, allowing other transactions to modify and commit the data. When the current transaction reads again, different data is obtained, leading to the <strong>non-repeatable read</strong> problem.</p>
+<hr>
+<p><strong>REPEATABLE READ</strong></p>
+<ol>
+<li>Same as READ COMMITTED.</li>
+<li>The X and S locks are BOTH released at the end of the transaction, marking the transition to the shrinking phase.</li>
+</ol>
+<p>Since the S lock is also retained until the end of the transaction, other transactions cannot modify the corresponding data, ensuring that the same data is obtained in multiple reads within the current transaction.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>S Lock</th>
+<th>X Lock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read Uncommitted</td>
+<td>N/A</td>
+<td>Released at end</td>
+</tr>
+<tr>
+<td>Read Committed</td>
+<td>Released after read</td>
+<td>Released at end</td>
+</tr>
+<tr>
+<td>Repeatable Read</td>
+<td>Released at end</td>
+<td>Released at end</td>
+</tr>
+</tbody>
+</table>
+
+			</div>
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/posts/2024-06-18-through-an-equality-query-on-a-record-what-locks-will-be-added/">Through an Equality Query on a Record What Locks Will Be Added</a></li>
+				
+				<li><a href="/posts/2024-06-16-lock_based_concurrency_control_protocol/">Lock Based Concurrency Control Protocol</a></li>
+				
+				<li><a href="/posts/network_programming_model/">Network Programming Model</a></li>
+				
+				<li><a href="/posts/some_notes_on_receivers/">[GO]Some notes on Receivers</a></li>
+				
+				<li><a href="/posts/2023-04-17-auto-generated-primary-key-in-mysql/">Auto Generated Primary Key in MySQL</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<hr />
+	<p>&copy; 2024 <a href="http://localhost:1313/"><b>CyberJunk</b></a>.
+	<a href="https://lo-li.net"><b>Archive</b></a>.
+	</p>
+</footer>
+
+</body>
+</html>

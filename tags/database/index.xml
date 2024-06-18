@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Database on CyberJunk</title>
+    <link>https://nico.moe/tags/database/</link>
+    <description>Recent content in Database on CyberJunk</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Jul 2023 16:10:01 +0800</lastBuildDate>
+    <atom:link href="https://nico.moe/tags/database/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lock Based Concurrency Control Protocol</title>
+      <link>https://nico.moe/posts/lock_based_concurrency_control_protocol/</link>
+      <pubDate>Tue, 18 Jul 2023 16:10:01 +0800</pubDate>
+      <guid>https://nico.moe/posts/lock_based_concurrency_control_protocol/</guid>
+      <description>&amp;ldquo;Lock-Based Concurrency Control&amp;rdquo; and &amp;ldquo;Multiversion Concurrency Control&amp;rdquo; are two different approaches to implementing transaction isolation levels. This article will introduce the former one.&#xA;In two-phase locking, a transaction is divided into the growing phase for acquiring locks and the shrinking phase for releasing locks. Different rules and restrictions can be set in different phases to achieve different isolation levels. For example:&#xA;Do you need a lock to read? What type of lock is needed to read?</description>
+    </item>
+    <item>
+      <title>Through an Equality Query on a Record What Locks Will Be Added</title>
+      <link>https://nico.moe/posts/through-an-equality-query-on-a-record-what-locks-will-be-added/</link>
+      <pubDate>Sun, 18 Jun 2023 18:39:17 +0800</pubDate>
+      <guid>https://nico.moe/posts/through-an-equality-query-on-a-record-what-locks-will-be-added/</guid>
+      <description>In the example table, id is the primary key, create a normal index on field age, and a unique index on name.&#xA;mysql&amp;gt; show create table test\G; Create Table: CREATE TABLE `test` ( `id` int NOT NULL, `age` int DEFAULT NULL, `msg` varchar(255) DEFAULT NULL, `name` char(10) DEFAULT NULL, PRIMARY KEY (`id`), UNIQUE KEY `name` (`name`), KEY `idx_age` (`age`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci mysql&amp;gt; select * from test; +----+------+------+------+ | id | age | msg | name | +----+------+------+------+ | 1 | 10 | NULL | a | | 3 | 20 | NULL | NULL | | 4 | 21 | NULL | NULL | +----+------+------+------+ Observe the locking situation under the RR level.</description>
+    </item>
+    <item>
+      <title>Auto Generated Primary Key in MySQL</title>
+      <link>https://nico.moe/posts/auto-generated-primary-key-in-mysql/</link>
+      <pubDate>Mon, 17 Apr 2023 16:17:02 +0800</pubDate>
+      <guid>https://nico.moe/posts/auto-generated-primary-key-in-mysql/</guid>
+      <description>When a primary key is not explicitly specified, MySQL uses the first not null, unique, and integer field as the primary key. If none are found, it generates an implicit primary key ROW_ID.&#xA;Creating the following four tables, only the last one will use id as the primary key. Since secondary indexes include the primary key, let&amp;rsquo;s create a secondary index to test and observe the indexing situation on these tables.</description>
+    </item>
+  </channel>
+</rss>

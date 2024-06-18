@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type=text/css>body{font-family:monospace;}</style>
+	<title>Auto Generated Primary Key in MySQL</title>
+	
+	
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+</head>
+<body>
+	<header>
+	===============<br>
+	== <a href="http://localhost:1313/">CyberJunk</a> ==<br>
+	===============
+	<div style="float: right;">Made with 😭</div><br>
+	<p>
+	<nav>
+			<a href="/"><b>Home</b></a>.
+			
+			
+			<a href="/posts/"><b>Posts</b></a>.
+			
+			<a href="/categories/"><b>Categories</b></a>.
+			
+			<a href="/tags/"><b>Tags</b></a>.
+			
+			<a href="https://github.com/slk000"><b>Github</b></a>.
+			
+	</nav>
+	</p>
+	
+	<hr />
+</header>
+
+	
+	<main>
+		<article>
+			<h1>Auto Generated Primary Key in MySQL</h1>
+			<b><time>2024.06.17 16:17</time></b>
+		       
+		           <a href="/tags/database">Database</a>
+        	       
+
+			<div>
+				<p>When a primary key is not explicitly specified, MySQL uses the <strong>first</strong> <code>not null</code>, <code>unique</code>, and <strong>integer</strong> field as the primary key. If none are found, it generates an implicit primary key <code>ROW_ID</code>.</p>
+<p>Creating the following four tables, only the last one will use <code>id</code> as the primary key. Since secondary indexes include the primary key, let&rsquo;s create a secondary index to test and observe the indexing situation on these tables.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">nothing</span>(id int, val int, <span style="color:#66d9ef">index</span> idx_val(val));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> not_null(id int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>, val int, <span style="color:#66d9ef">index</span> idx_val(val));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#f92672">`</span><span style="color:#66d9ef">unique</span><span style="color:#f92672">`</span>(id int <span style="color:#66d9ef">unique</span>, val int, <span style="color:#66d9ef">index</span> idx_val(val));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> not_null_unique(id int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">unique</span>, val int, <span style="color:#66d9ef">index</span> idx_val(val));
+</span></span></code></pre></div><h3 id="first-table">First Table</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">desc</span> <span style="color:#66d9ef">nothing</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Field <span style="color:#f92672">|</span> <span style="color:#66d9ef">Type</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Null</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Key</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Default</span> <span style="color:#f92672">|</span> Extra <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> id    <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> YES  <span style="color:#f92672">|</span>     <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> val   <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> YES  <span style="color:#f92672">|</span> MUL <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> index_name, stat_name, stat_description <span style="color:#66d9ef">from</span> mysql.innodb_index_stats <span style="color:#66d9ef">where</span> database_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span> <span style="color:#66d9ef">and</span> <span style="color:#66d9ef">table_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;nothing&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> index_name      <span style="color:#f92672">|</span> stat_name    <span style="color:#f92672">|</span> stat_description                  <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> DB_ROW_ID                         <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> val                               <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_diff_pfx02 <span style="color:#f92672">|</span> val,DB_ROW_ID                     <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span></code></pre></div><p>You can see that there are two indexes in the table:</p>
+<ol>
+<li>The clustered index <code>GEN_CLUST_INDEX</code> created on the automatically generated <code>ROW_ID</code>.</li>
+<li>The <code>idx_val</code> index we added.</li>
+</ol>
+<p>Additionally, since the compound index <code>idx_val</code> has two prefixes: <code>(val)</code> and <code>(val, primary key)</code>, we can see that MySQL uses the generated primary key <code>DB_ROW_ID</code>.</p>
+<h3 id="second-table">Second Table</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">desc</span> not_null;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Field <span style="color:#f92672">|</span> <span style="color:#66d9ef">Type</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Null</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Key</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Default</span> <span style="color:#f92672">|</span> Extra <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> id    <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> <span style="color:#66d9ef">NO</span>   <span style="color:#f92672">|</span>     <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> val   <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> YES  <span style="color:#f92672">|</span> MUL <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> index_name, stat_name, stat_description <span style="color:#66d9ef">from</span> mysql.innodb_index_stats <span style="color:#66d9ef">where</span> database_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span> <span style="color:#66d9ef">and</span> <span style="color:#66d9ef">table_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;not_null&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> index_name      <span style="color:#f92672">|</span> stat_name    <span style="color:#f92672">|</span> stat_description                  <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> DB_ROW_ID                         <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> val                               <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_diff_pfx02 <span style="color:#f92672">|</span> val,DB_ROW_ID                     <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span></code></pre></div><p>The situation is the same.</p>
+<h3 id="third-table">Third Table</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">desc</span> <span style="color:#f92672">`</span><span style="color:#66d9ef">unique</span><span style="color:#f92672">`</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Field <span style="color:#f92672">|</span> <span style="color:#66d9ef">Type</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Null</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Key</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Default</span> <span style="color:#f92672">|</span> Extra <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> id    <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> YES  <span style="color:#f92672">|</span> UNI <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> val   <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> YES  <span style="color:#f92672">|</span> MUL <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> index_name, stat_name, stat_description <span style="color:#66d9ef">from</span> mysql.innodb_index_stats <span style="color:#66d9ef">where</span> database_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span> <span style="color:#66d9ef">and</span> <span style="color:#66d9ef">table_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;unique&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> index_name      <span style="color:#f92672">|</span> stat_name    <span style="color:#f92672">|</span> stat_description                  <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> DB_ROW_ID                         <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> GEN_CLUST_INDEX <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> id              <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> id                                <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> id              <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> id              <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> val                               <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_diff_pfx02 <span style="color:#f92672">|</span> val,DB_ROW_ID                     <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val         <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-----------------+--------------+-----------------------------------+
+</span></span></span></code></pre></div><p>In addition to the previous two indexes, MySQL automatically creates a unique index <code>id</code> due to the unique constraint.</p>
+<h3 id="fourth-table">Fourth Table</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">desc</span> not_null_unique;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Field <span style="color:#f92672">|</span> <span style="color:#66d9ef">Type</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Null</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Key</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">Default</span> <span style="color:#f92672">|</span> Extra <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> id    <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> <span style="color:#66d9ef">NO</span>   <span style="color:#f92672">|</span> PRI <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> val   <span style="color:#f92672">|</span> int  <span style="color:#f92672">|</span> YES  <span style="color:#f92672">|</span> MUL <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span>    <span style="color:#f92672">|</span>       <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------+------+------+-----+---------+-------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> index_name, stat_name, stat_description <span style="color:#66d9ef">from</span> mysql.innodb_index_stats <span style="color:#66d9ef">where</span> database_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span> <span style="color:#66d9ef">and</span> <span style="color:#66d9ef">table_name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;not_null_unique&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> index_name <span style="color:#f92672">|</span> stat_name    <span style="color:#f92672">|</span> stat_description                  <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">------------+--------------+-----------------------------------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> id         <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> id                                <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> id         <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> id         <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val    <span style="color:#f92672">|</span> n_diff_pfx01 <span style="color:#f92672">|</span> val                               <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val    <span style="color:#f92672">|</span> n_diff_pfx02 <span style="color:#f92672">|</span> val,id                            <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val    <span style="color:#f92672">|</span> n_leaf_pages <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> leaf pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> idx_val    <span style="color:#f92672">|</span> <span style="color:#66d9ef">size</span>         <span style="color:#f92672">|</span> Number <span style="color:#66d9ef">of</span> pages <span style="color:#66d9ef">in</span> the <span style="color:#66d9ef">index</span>      <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">------------+--------------+-----------------------------------+
+</span></span></span></code></pre></div><p>You can see that <code>GEN_CLUST_INDEX</code> and <code>DB_ROW_ID</code> have disappeared, replaced by the qualified <code>id</code> field, indicating that MySQL chose this field as the primary key.</p>
+
+			</div>
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/posts/2024-06-18-through-an-equality-query-on-a-record-what-locks-will-be-added/">Through an Equality Query on a Record What Locks Will Be Added</a></li>
+				
+				<li><a href="/posts/2024-06-17-auto-generated-primary-key-in-mysql/">Auto Generated Primary Key in MySQL</a></li>
+				
+				<li><a href="/posts/2024-06-16-lock_based_concurrency_control_protocol/">Lock Based Concurrency Control Protocol</a></li>
+				
+				<li><a href="/posts/network_programming_model/">Network Programming Model</a></li>
+				
+				<li><a href="/posts/some_notes_on_receivers/">[GO]Some notes on Receivers</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<hr />
+	<p>&copy; 2024 <a href="http://localhost:1313/"><b>CyberJunk</b></a>.
+	<a href="https://lo-li.net"><b>Archive</b></a>.
+	</p>
+</footer>
+
+</body>
+</html>

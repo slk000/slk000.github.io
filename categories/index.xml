@@ -6,8 +6,29 @@
     <description>Recent content in Categories on CyberJunk</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Jun 2024 19:54:23 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 20 Oct 2023 14:31:37 +0800</lastBuildDate>
     <atom:link href="https://nico.moe/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GoLang</title>
+      <link>https://nico.moe/categories/golang/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://nico.moe/categories/golang/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Database</title>
+      <link>https://nico.moe/categories/database/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://nico.moe/categories/database/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OS</title>
+      <link>https://nico.moe/categories/os/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://nico.moe/categories/os/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Default</title>
       <link>https://nico.moe/categories/default/</link>

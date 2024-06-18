@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type=text/css>body{font-family:monospace;}</style>
+	<title>Network Programming Model</title>
+	
+	
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+</head>
+<body>
+	<header>
+	===============<br>
+	== <a href="http://localhost:1313/">CyberJunk</a> ==<br>
+	===============
+	<div style="float: right;">Made with 😭</div><br>
+	<p>
+	<nav>
+			<a href="/"><b>Home</b></a>.
+			
+			
+			<a href="/posts/"><b>Posts</b></a>.
+			
+			<a href="/categories/"><b>Categories</b></a>.
+			
+			<a href="/tags/"><b>Tags</b></a>.
+			
+			<a href="https://github.com/slk000"><b>Github</b></a>.
+			
+	</nav>
+	</p>
+	
+	<hr />
+</header>
+
+	
+	<main>
+		<article>
+			<h1>Network Programming Model</h1>
+			<b><time>2024.06.16 14:41</time></b>
+		       
+
+			<div>
+				<p>S
+tags:</p>
+<ul>
+<li>OS
++++</li>
+</ul>
+<h1 id="blocking-and-non-blocking-io">Blocking and Non-blocking I/O</h1>
+<p>The focus of &ldquo;blocking&rdquo; and &ldquo;non-blocking&rdquo; I/O is how user programs handle situations when <strong>data is not ready in the kernel</strong>.</p>
+<p>
+<figure>
+  <img src="http://static.lo-li.net/images/2023/11/bio-nio.png" alt="Comparison of BIO and NIO" />
+</figure>
+
+
+</p>
+<h2 id="blocking-io-bio">Blocking I/O (BIO)</h2>
+<ul>
+<li>
+<p>When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.</p>
+</li>
+<li>
+<p>When try to write, if the data cannot be written (e.g., buffer is full), OS blocks and waits until it can write.</p>
+</li>
+<li>
+<p><strong>Pros</strong> ✔️: Simple to implement. Since the call blocks the thread, usually, one thread is allocated to handle with one client connection, and it simply sleeps while waiting for data.</p>
+</li>
+<li>
+<p><strong>Cons</strong> ❌: Limited number of concurrent connections because thread resources are limited, and context switching among threads has a cost.</p>
+</li>
+<li>
+<p><strong>Improvement</strong> 🤔: The crux of blocking I/O is the &ldquo;blocking,&rdquo; thus leading to <strong>Non-blocking I/O (NIO)</strong> 👇</p>
+</li>
+</ul>
+<h2 id="non-blocking-io-nio">Non-blocking I/O (NIO)</h2>
+<ul>
+<li>Regardless of whether the connection is readable/writable, the user program attempts to read/write. If it cannot be done, the kernel returns <code>EAGAIN</code> or <code>EWOULDBLOCK</code>.</li>
+<li>In blocking <code>write</code>, the kernel waits until the buffer can hold all the data before returning, and it returns the number of bytes written, which equals the number of bytes the user passed in. However, in non-blocking <code>write</code>, it copies → returns → copies again → returns again, returning a portion of the bytes each time.</li>
+</ul>
+<h2 id="read--write">read &amp; write</h2>
+<p>The different behaviors of <code>read</code> and <code>write</code> in blocking and non-blocking modes:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Buffer State</th>
+<th>Blocking Mode</th>
+<th style="text-align:left">Non-blocking Mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read</code></td>
+<td>Data available</td>
+<td>↩️ Immediately returns</td>
+<td style="text-align:left">↩️ Immediately returns</td>
+</tr>
+<tr>
+<td>～</td>
+<td>No data</td>
+<td>⌛ Waits for data</td>
+<td style="text-align:left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
+</tr>
+<tr>
+<td><code>write</code></td>
+<td>Free</td>
+<td>Writes all before returning</td>
+<td style="text-align:left">Writes as much as possible, then returns</td>
+</tr>
+<tr>
+<td>～</td>
+<td>Not free</td>
+<td>⌛ Waits for free space</td>
+<td style="text-align:left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ul>
+<li>
+<p><code>read</code> returns as soon as there is any data  in the buffer, without necessarily waiting for all data to receive.</p>
+</li>
+<li>
+<p>For blocking <code>write</code>, if the opposite peer actively closes the socket, it will also return immediately.</p>
+</li>
+<li>
+<p><strong>Pros</strong> ✔️: It allows polling multiple sockets in a single thread.</p>
+</li>
+<li>
+<p><strong>Cons</strong> ❌: It wastes a lot of CPU times for loops and system calls.</p>
+</li>
+<li>
+<p><strong>Improvement</strong> 🤔: The crux is &ldquo;active polling&rdquo; by the user program for &ldquo;each socket,&rdquo; leading to <a href="#I/O-Multiplexing"><strong>I/O Multiplexing</strong></a> which allows the kernel to notify events in batches 👇</p>
+</li>
+</ul>
+<hr>
+<h1 id="io-multiplexing">I/O Multiplexing</h1>
+<ul>
+<li>The user program does not need to poll each socket multiple times; instead, it can use a limited number of <code>select</code>/<code>poll</code>/<code>epoll</code> system calls to have the kernel actively notify data events.</li>
+</ul>
+<h2 id="select--poll">select &amp; poll</h2>
+<p><strong>Similarities</strong>:</p>
+<ol>
+<li>Need to fully copy of File Descriptors:
+<ol>
+<li>User space ➡️ Kernel space: Setting the FDs to be monitored;</li>
+<li>Kernel space ➡️ User space: The kernel sets the active FDs and copies them back to user space;</li>
+</ol>
+</li>
+<li>Need to traverse all returned FDs to find which is ready</li>
+</ol>
+<p><strong>Differences</strong>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>select</th>
+<th>poll</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FD storage</td>
+<td>Uses a bitmap of size 1K</td>
+<td>Uses an array of <code>pollfd</code> structures</td>
+</tr>
+<tr>
+<td>Event description method</td>
+<td>Uses three FD bitmaps to represent different event types</td>
+<td>Sets events in the <code>pollfd</code> structure</td>
+</tr>
+<tr>
+<td>How notify</td>
+<td>The kernel modifies the passed bitmap</td>
+<td>The kernel modifies specific fields in the <code>pollfd</code> structure</td>
+</tr>
+</tbody>
+</table>
+<p>Improvement🤔: 1. Do not need to copy all FDs; 2. The kernel can indicate available FDs. Here comes the epoll👇</p>
+<h2 id="epoll">epoll</h2>
+<p>Key advantages:</p>
+<ol>
+<li>Edge-triggered</li>
+<li>Red-black tree</li>
+</ol>
+<hr>
+<h1 id="factors-affecting-concurrency">Factors Affecting Concurrency</h1>
+<h2 id="number-of-open-files">Number of Open Files</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check</span>
+</span></span><span style="display:flex;"><span>$ ulimit -n
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Modify /etc/sysctl.conf</span>
+</span></span><span style="display:flex;"><span>fs.file-max <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>net.ipv4.ip_conntrack_max <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>net.ipv4.netfilter.ip_conntrack_max <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span></code></pre></div><h2 id="memory">Memory</h2>
+<p>Memory is needed to allocate buffers for connections.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Minimum allocation value, default allocation value, and maximum allocation value</span>
+</span></span><span style="display:flex;"><span>$ cat /proc/sys/net/ipv4/tcp_wmem
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4096</span>    <span style="color:#ae81ff">16384</span>    <span style="color:#ae81ff">4194304</span>
+</span></span><span style="display:flex;"><span>$ cat /proc/sys/net/ipv4/tcp_rmem
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4096</span>    <span style="color:#ae81ff">87380</span>    <span style="color:#ae81ff">6291456</span>
+</span></span></code></pre></div><h2 id="network-bandwidth">Network Bandwidth</h2>
+<h2 id="how-to-cooperate-with-the-os-to-sense-io-events">How to Cooperate with the OS to Sense I/O Events?</h2>
+<h2 id="how-to-allocate-and-use-process-and-thread-resources-to-serve-tens-of-thousan">How to Allocate and Use Process and Thread Resources to Serve Tens of Thousan</h2>
+
+			</div>
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/posts/network_programming_model/">Network Programming Model</a></li>
+				
+				<li><a href="/posts/some_notes_on_receivers/">[GO]Some notes on Receivers</a></li>
+				
+				<li><a href="/posts/2023-06-18-through-an-equality-query-on-a-record-what-locks-will-be-added/">Through an Equality Query on a Record What Locks Will Be Added</a></li>
+				
+				<li><a href="/posts/2023-06-18-lock_based_concurrency_control_protocol/">Lock Based Concurrency Control Protocol</a></li>
+				
+				<li><a href="/posts/2023-04-17-auto-generated-primary-key-in-mysql/">Auto Generated Primary Key in MySQL</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<hr />
+	<p>&copy; 2024 <a href="http://localhost:1313/"><b>CyberJunk</b></a>.
+	<a href="https://lo-li.net"><b>Archive</b></a>.
+	</p>
+</footer>
+
+</body>
+</html>

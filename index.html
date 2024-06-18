@@ -18,11 +18,25 @@
 	===============<br>
 	== <a href="https://nico.moe/">CyberJunk</a> ==<br>
 	===============
-	<div style="float: right;"></div><br>
+	<div style="float: right;">Made with 😭</div><br>
 	<p>
 	<nav>
 			<a href="/"><b>Start</b></a>.
 			
+			
+			<a href="/posts/"><b>Posts</b></a>.
+			
+			<a href="/categories/"><b>Categories</b></a>.
+			
+			<a href="/tags/"><b>Tags</b></a>.
+			
+			<a href="https://github.com/slk000"><b>Github</b></a>.
+			
+			<a href="https://lo-li.net"><b>Chinese</b></a>.
+			
+	</nav>
+	</p>
+	
 </header>
 
 	
@@ -30,8 +44,92 @@
 		
 		
 			<article>
-	<h1><a href="https://nico.moe/posts/2024-06-15-hello/">Hello</a></h1>
-	<b><time>2024-06-15 19:54:23</time></b>
+	<h1><a href="https://nico.moe/posts/some-notes-on-receivers/">Some notes on Receivers</a></h1>
+	<b><time>2023.10.20 14:31</time></b>
+	
+	<a href="/tags/golang">GoLang</a>
+	
+	<div>
+		Review of receivers When a value receiver is defined, Go automatically generates a corresponding pointer receiver.
+Auto-generating a pointer receiver causes differences in the method sets of pointer types and value types.
+For example, take the Len() method below, Go will automatically generate a corresponding pointer receiver version:
+type List []int func (l List) Len() int { return len(l) } // func (l *List) Len() int { ... } func (l *List) Append(val int) { *l = append(*l, val) } For type List, its method set includes:
+		
+			<a href="https://nico.moe/posts/some-notes-on-receivers/">Read more...</a>
+		
+	</div>
+</article>
+
+		
+			<article>
+	<h1><a href="https://nico.moe/posts/lock_based_concurrency_control_protocol/">Lock Based Concurrency Control Protocol</a></h1>
+	<b><time>2023.07.18 16:10</time></b>
+	
+	<a href="/tags/database">Database</a>
+	
+	<div>
+		&ldquo;Lock-Based Concurrency Control&rdquo; and &ldquo;Multiversion Concurrency Control&rdquo; are two different approaches to implementing transaction isolation levels. This article will introduce the former one.
+In two-phase locking, a transaction is divided into the growing phase for acquiring locks and the shrinking phase for releasing locks. Different rules and restrictions can be set in different phases to achieve different isolation levels. For example:
+Do you need a lock to read? What type of lock is needed to read?
+		
+			<a href="https://nico.moe/posts/lock_based_concurrency_control_protocol/">Read more...</a>
+		
+	</div>
+</article>
+
+		
+			<article>
+	<h1><a href="https://nico.moe/posts/through-an-equality-query-on-a-record-what-locks-will-be-added/">Through an Equality Query on a Record What Locks Will Be Added</a></h1>
+	<b><time>2023.06.18 18:39</time></b>
+	
+	<a href="/tags/database">Database</a>
+	
+	<div>
+		In the example table, id is the primary key, create a normal index on field age, and a unique index on name.
+mysql&gt; show create table test\G; Create Table: CREATE TABLE `test` ( `id` int NOT NULL, `age` int DEFAULT NULL, `msg` varchar(255) DEFAULT NULL, `name` char(10) DEFAULT NULL, PRIMARY KEY (`id`), UNIQUE KEY `name` (`name`), KEY `idx_age` (`age`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci mysql&gt; select * from test; +----+------+------+------+ | id | age | msg | name | +----+------+------+------+ | 1 | 10 | NULL | a | | 3 | 20 | NULL | NULL | | 4 | 21 | NULL | NULL | +----+------+------+------+ Observe the locking situation under the RR level.
+		
+			<a href="https://nico.moe/posts/through-an-equality-query-on-a-record-what-locks-will-be-added/">Read more...</a>
+		
+	</div>
+</article>
+
+		
+			<article>
+	<h1><a href="https://nico.moe/posts/auto-generated-primary-key-in-mysql/">Auto Generated Primary Key in MySQL</a></h1>
+	<b><time>2023.04.17 16:17</time></b>
+	
+	<a href="/tags/database">Database</a>
+	
+	<div>
+		When a primary key is not explicitly specified, MySQL uses the first not null, unique, and integer field as the primary key. If none are found, it generates an implicit primary key ROW_ID.
+Creating the following four tables, only the last one will use id as the primary key. Since secondary indexes include the primary key, let&rsquo;s create a secondary index to test and observe the indexing situation on these tables.
+		
+			<a href="https://nico.moe/posts/auto-generated-primary-key-in-mysql/">Read more...</a>
+		
+	</div>
+</article>
+
+		
+			<article>
+	<h1><a href="https://nico.moe/posts/network-programming-model/">Network Programming Model</a></h1>
+	<b><time>2022.11.16 14:41</time></b>
+	
+	<a href="/tags/os">OS</a>
+	
+	<div>
+		Blocking and Non-blocking I/O The focus of &ldquo;blocking&rdquo; and &ldquo;non-blocking&rdquo; I/O is how user programs handle situations when data is not ready in the kernel.
+Blocking I/O (BIO) When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.
+When try to write, if the data cannot be written (e.g., buffer is full), OS blocks and waits until it can write.
+		
+			<a href="https://nico.moe/posts/network-programming-model/">Read more...</a>
+		
+	</div>
+</article>
+
+		
+			<article>
+	<h1><a href="https://nico.moe/posts/hello/">Hello</a></h1>
+	<b><time>1970.01.01 00:00</time></b>
 	
 	<a href="/tags/default">default</a>
 	
@@ -52,6 +150,7 @@
 
 	<footer>
 	<p>&copy; 2024 <a href="https://nico.moe/"><b>CyberJunk</b></a>.
+	<a href="#"><b>#</b></a>.
 	</p>
 </footer>
 
