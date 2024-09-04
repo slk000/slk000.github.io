@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.133.1">
+	<meta name="generator" content="Hugo 0.134.0">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,10 +50,16 @@
 	<a href="/tags/golang">GoLang</a>
 	
 	<div>
-		Review of receivers When a value receiver is defined, Go automatically generates a corresponding pointer receiver.
-Auto-generating a pointer receiver causes differences in the method sets of pointer types and value types.
-For example, take the Len() method below, Go will automatically generate a corresponding pointer receiver version:
-type List []int func (l List) Len() int { return len(l) } // func (l *List) Len() int { ... } func (l *List) Append(val int) { *l = append(*l, val) } For type List, its method set includes:
+		<h1 id="review-of-receivers">Review of receivers</h1>
+<p>When a value receiver is defined, Go automatically generates a corresponding pointer receiver.</p>
+<p>Auto-generating a pointer receiver causes differences in the method sets of pointer types and value types.</p>
+<p>For example, take the <code>Len()</code> method below, Go will automatically generate a corresponding pointer receiver version:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">List</span> []<span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">l</span> <span style="color:#a6e22e">List</span>) <span style="color:#a6e22e">Len</span>() <span style="color:#66d9ef">int</span> { <span style="color:#66d9ef">return</span> len(<span style="color:#a6e22e">l</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// func (l *List) Len() int { ... }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">List</span>) <span style="color:#a6e22e">Append</span>(<span style="color:#a6e22e">val</span> <span style="color:#66d9ef">int</span>) { <span style="color:#f92672">*</span><span style="color:#a6e22e">l</span> = append(<span style="color:#f92672">*</span><span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">val</span>) }
+</span></span></code></pr
 		
 			<a href="https://nico.moe/posts/some-notes-on-receivers/">Read more...</a>
 		
@@ -68,9 +74,13 @@ type List []int func (l List) Len() int { return len(l) } // func (l *List) Len(
 	<a href="/tags/database">Database</a>
 	
 	<div>
-		&ldquo;Lock-Based Concurrency Control&rdquo; and &ldquo;Multiversion Concurrency Control&rdquo; are two different approaches to implementing transaction isolation levels. This article will introduce the former one.
-In two-phase locking, a transaction is divided into the growing phase for acquiring locks and the shrinking phase for releasing locks. Different rules and restrictions can be set in different phases to achieve different isolation levels. For example:
-Do you need a lock to read? What type of lock is needed to read?
+		<p>&ldquo;Lock-Based Concurrency Control&rdquo; and &ldquo;Multiversion Concurrency Control&rdquo; are two different approaches to implementing transaction isolation levels. This article will introduce the former one.</p>
+<p>In two-phase locking, a transaction is divided into the <strong>growing phase</strong> for acquiring locks and the <strong>shrinking phase</strong> for releasing locks. Different rules and restrictions can be set in different phases to achieve different isolation levels. For example:</p>
+<ol>
+<li>Do you need a lock to read? What type of lock is needed to read?</li>
+<li>When to unlock?</li>
+</ol>
+<p>When writing data, transactions at all isolation levels always require an X lock, which is unlocked at the end of the transaction. This prevents  <strong>dirty writes</strong>, which are not allowed in databases, from occurring between two write transactions. Therefore, X locks may be used at all isolation levels, but S locks are not always required.</p>
 		
 			<a href="https://nico.moe/posts/lock_based_concurrency_control_protocol/">Read more...</a>
 		
@@ -85,8 +95,27 @@ Do you need a lock to read? What type of lock is needed to read?
 	<a href="/tags/database">Database</a>
 	
 	<div>
-		In the example table, id is the primary key, create a normal index on field age, and a unique index on name.
-mysql&gt; show create table test\G; Create Table: CREATE TABLE `test` ( `id` int NOT NULL, `age` int DEFAULT NULL, `msg` varchar(255) DEFAULT NULL, `name` char(10) DEFAULT NULL, PRIMARY KEY (`id`), UNIQUE KEY `name` (`name`), KEY `idx_age` (`age`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci mysql&gt; select * from test; +----+------+------+------+ | id | age | msg | name | +----+------+------+------+ | 1 | 10 | NULL | a | | 3 | 20 | NULL | NULL | | 4 | 21 | NULL | NULL | +----+------+------+------+ Observe the locking situation under the RR level.
+		<p>In the example table, <code>id</code> is the primary key, create a normal index on field <code>age</code>, and a unique index on <code>name</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">show</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> test<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#66d9ef">G</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">Create</span> <span style="color:#66d9ef">Table</span>: <span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>test<span style="color:#f92672">`</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> int <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>age<span style="color:#f92672">`</span> int <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>msg<span style="color:#f92672">`</span> varchar(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> char(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">KEY</span> <span style="color:#f92672">`</span>name<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>name<span style="color:#f92672">`</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">KEY</span> <span style="color:#f92672">`</span>idx_age<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>age<span style="color:#f92672">`</span>)
+</span></span><span style="display:flex;"><span>) ENGINE<span style="color:#f92672">=</span>InnoDB <span style="color:#66d9ef">DEFAULT</span> CHARSET<span style="color:#f92672">=</span>utf8mb4 <span style="color:#66d9ef">COLLATE</span><span style="color:#f92672">=</span>utf8mb4_0900_ai_ci
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> test;  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">----+------+------+------+  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> id <span style="color:#f92672">|</span> age  <span style="color:#f92672">|</span> msg  <span style="color:#f92672">|</span> name <span style="color:#f92672">|</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">----+------+------+------+  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span>  <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>   <span style="color:#ae81ff">10</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span> a    <span style="color:#f92672">|</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span>  <span style="color:#ae81ff">3</span> <span style="color:#f92672">|</span>   <span style="color:#ae81ff">20</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span>  <span style="color:#ae81ff">4</span> <span style="color:#f92672">|</span>   <span style="color:#ae81ff">21</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">----+------+------+------+
+</span></span></span></code></pr
 		
 			<a href="https://nico.moe/posts/through-an-equality-query-on-a-record-what-locks-will-be-added/">Read more...</a>
 		
@@ -101,8 +130,8 @@ mysql&gt; show create table test\G; Create Table: CREATE TABLE `test` ( `id` int
 	<a href="/tags/database">Database</a>
 	
 	<div>
-		When a primary key is not explicitly specified, MySQL uses the first not null, unique, and integer field as the primary key. If none are found, it generates an implicit primary key ROW_ID.
-Creating the following four tables, only the last one will use id as the primary key. Since secondary indexes include the primary key, let&rsquo;s create a secondary index to test and observe the indexing situation on these tables.
+		<p>When a primary key is not explicitly specified, MySQL uses the <strong>first</strong> <code>not null</code>, <code>unique</code>, and <strong>integer</strong> field as the primary key. If none are found, it generates an implicit primary key <code>ROW_ID</code>.</p>
+<p>Creating the following four tables, only the last one will use <code>id</code> as the primary key. Since secondary indexes include the primary key, let&rsquo;s create a secondary index to test and observe the indexing situation on these tables.</p>
 		
 			<a href="https://nico.moe/posts/auto-generated-primary-key-in-mysql/">Read more...</a>
 		
@@ -117,9 +146,19 @@ Creating the following four tables, only the last one will use id as the primary
 	<a href="/tags/os">OS</a>
 	
 	<div>
-		Blocking and Non-blocking I/O The focus of &ldquo;blocking&rdquo; and &ldquo;non-blocking&rdquo; I/O is how user programs handle situations when data is not ready in the kernel.
-Blocking I/O (BIO) When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.
-When try to write, if the data cannot be written (e.g., buffer is full), OS blocks and waits until it can write.
+		<h1 id="blocking-and-non-blocking-io">Blocking and Non-blocking I/O</h1>
+<p>The focus of &ldquo;blocking&rdquo; and &ldquo;non-blocking&rdquo; I/O is how user programs handle situations when <strong>data is not ready in the kernel</strong>.</p>
+<p>
+<figure>
+  <img src="http://static.lo-li.net/images/2023/11/bio-nio.png" alt="Comparison of BIO and NIO" />
+</figure>
+
+
+</p>
+<h2 id="blocking-io-bio">Blocking I/O (BIO)</h2>
+<ul>
+<li>
+<p>When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.</p>
 		
 			<a href="https://nico.moe/posts/network-programming-model/">Read more...</a>
 		
@@ -134,7 +173,7 @@ When try to write, if the data cannot be written (e.g., buffer is full), OS bloc
 	<a href="/tags/default">default</a>
 	
 	<div>
-		Hello another world.
+		<p>Hello another world.</p>
 		
 	</div>
 </article>

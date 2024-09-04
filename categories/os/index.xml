@@ -13,7 +13,7 @@
       <link>https://nico.moe/posts/network-programming-model/</link>
       <pubDate>Wed, 16 Nov 2022 14:41:51 +0800</pubDate>
       <guid>https://nico.moe/posts/network-programming-model/</guid>
-      <description>Blocking and Non-blocking I/O The focus of &amp;ldquo;blocking&amp;rdquo; and &amp;ldquo;non-blocking&amp;rdquo; I/O is how user programs handle situations when data is not ready in the kernel.&#xA;Blocking I/O (BIO) When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.&#xA;When try to write, if the data cannot be written (e.g., buffer is full), OS blocks and waits until it can write.</description>
+      <description>&lt;h1 id=&#34;blocking-and-non-blocking-io&#34;&gt;Blocking and Non-blocking I/O&lt;/h1&gt;&#xA;&lt;p&gt;The focus of &amp;ldquo;blocking&amp;rdquo; and &amp;ldquo;non-blocking&amp;rdquo; I/O is how user programs handle situations when &lt;strong&gt;data is not ready in the kernel&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;&lt;figure&gt;&#xA;  &lt;img src=&#34;http://static.lo-li.net/images/2023/11/bio-nio.png&#34; alt=&#34;Comparison of BIO and NIO&#34; /&gt;&#xA;&lt;/figure&gt;&#xA;&#xA;&#xA;&lt;/p&gt;&#xA;&lt;h2 id=&#34;blocking-io-bio&#34;&gt;Blocking I/O (BIO)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
