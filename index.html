@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.134.1">
+	<meta name="generator" content="Hugo 0.134.2">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,7 +59,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">l</span> <span style="color:#a6e22e">List</span>) <span style="color:#a6e22e">Len</span>() <span style="color:#66d9ef">int</span> { <span style="color:#66d9ef">return</span> len(<span style="color:#a6e22e">l</span>) }
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// func (l *List) Len() int { ... }
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">List</span>) <span style="color:#a6e22e">Append</span>(<span style="color:#a6e22e">val</span> <span style="color:#66d9ef">int</span>) { <span style="color:#f92672">*</span><span style="color:#a6e22e">l</span> = append(<span style="color:#f92672">*</span><span style="color:#a6e22e">l</span>, <span style="color:#a6e22e">val</span>) }
-</span></span></code></pr
+</span></span></code></pre></div><p>For type <code>List</code>, its method set includes:</p>
 		
 			<a href="https://nico.moe/posts/some-notes-on-receivers/">Read more...</a>
 		
@@ -115,7 +115,9 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">|</span>  <span style="color:#ae81ff">3</span> <span style="color:#f92672">|</span>   <span style="color:#ae81ff">20</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span>  
 </span></span><span style="display:flex;"><span><span style="color:#f92672">|</span>  <span style="color:#ae81ff">4</span> <span style="color:#f92672">|</span>   <span style="color:#ae81ff">21</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span>  
 </span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">----+------+------+------+
-</span></span></span></code></pr
+</span></span></span></code></pre></div><p>Observe the locking situation under the <strong>RR</strong> level.</p>
+<h1 id="1-updating-records-through-the-primary-key-unique-index">1. Updating records through the primary key unique index</h1>
+<p>Check the execution plan; it uses the primary index.</p>
 		
 			<a href="https://nico.moe/posts/through-an-equality-query-on-a-record-what-locks-will-be-added/">Read more...</a>
 		
@@ -159,6 +161,9 @@
 <ul>
 <li>
 <p>When try to read, if the data is not available (e.g., no data), OS blocks and waits until data is readable.</p>
+</li>
+<li>
+<p>When try to write, if the data cannot be written (e.g., buffer is full), OS blocks and waits until it can write.</p>
 		
 			<a href="https://nico.moe/posts/network-programming-model/">Read more...</a>
 		
