@@ -85,35 +85,35 @@
 <table>
   <thead>
       <tr>
-          <th style="text-align: left">Operation</th>
-          <th style="text-align: left">Buffer State</th>
-          <th style="text-align: left">Blocking Mode</th>
+          <th>Operation</th>
+          <th>Buffer State</th>
+          <th>Blocking Mode</th>
           <th style="text-align: left">Non-blocking Mode</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left"><code>read</code></td>
-          <td style="text-align: left">Data available</td>
-          <td style="text-align: left">↩️ Immediately returns</td>
+          <td><code>read</code></td>
+          <td>Data available</td>
+          <td>↩️ Immediately returns</td>
           <td style="text-align: left">↩️ Immediately returns</td>
       </tr>
       <tr>
-          <td style="text-align: left">～</td>
-          <td style="text-align: left">No data</td>
-          <td style="text-align: left">⌛ Waits for data</td>
+          <td>～</td>
+          <td>No data</td>
+          <td>⌛ Waits for data</td>
           <td style="text-align: left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
       </tr>
       <tr>
-          <td style="text-align: left"><code>write</code></td>
-          <td style="text-align: left">Free</td>
-          <td style="text-align: left">Writes all before returning</td>
+          <td><code>write</code></td>
+          <td>Free</td>
+          <td>Writes all before returning</td>
           <td style="text-align: left">Writes as much as possible, then returns</td>
       </tr>
       <tr>
-          <td style="text-align: left">～</td>
-          <td style="text-align: left">Not free</td>
-          <td style="text-align: left">⌛ Waits for free space</td>
+          <td>～</td>
+          <td>Not free</td>
+          <td>⌛ Waits for free space</td>
           <td style="text-align: left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
       </tr>
   </tbody>
@@ -156,26 +156,26 @@
 <table>
   <thead>
       <tr>
-          <th style="text-align: left"></th>
-          <th style="text-align: left">select</th>
-          <th style="text-align: left">poll</th>
+          <th></th>
+          <th>select</th>
+          <th>poll</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">FD storage</td>
-          <td style="text-align: left">Uses a bitmap of size 1K</td>
-          <td style="text-align: left">Uses an array of <code>pollfd</code> structures</td>
+          <td>FD storage</td>
+          <td>Uses a bitmap of size 1K</td>
+          <td>Uses an array of <code>pollfd</code> structures</td>
       </tr>
       <tr>
-          <td style="text-align: left">Event description method</td>
-          <td style="text-align: left">Uses three FD bitmaps to represent different event types</td>
-          <td style="text-align: left">Sets events in the <code>pollfd</code> structure</td>
+          <td>Event description method</td>
+          <td>Uses three FD bitmaps to represent different event types</td>
+          <td>Sets events in the <code>pollfd</code> structure</td>
       </tr>
       <tr>
-          <td style="text-align: left">How notify</td>
-          <td style="text-align: left">The kernel modifies the passed bitmap</td>
-          <td style="text-align: left">The kernel modifies specific fields in the <code>pollfd</code> structure</td>
+          <td>How notify</td>
+          <td>The kernel modifies the passed bitmap</td>
+          <td>The kernel modifies specific fields in the <code>pollfd</code> structure</td>
       </tr>
   </tbody>
 </table>
