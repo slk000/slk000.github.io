@@ -8,10 +8,10 @@
     <loc>https://nico.moe/categories/</loc>
     <lastmod>2023-10-20T14:31:37+08:00</lastmod>
   </url><url>
-    <loc>https://nico.moe/tags/golang/</loc>
+    <loc>https://nico.moe/categories/golang/</loc>
     <lastmod>2023-10-20T14:31:37+08:00</lastmod>
   </url><url>
-    <loc>https://nico.moe/categories/golang/</loc>
+    <loc>https://nico.moe/tags/golang/</loc>
     <lastmod>2023-10-20T14:31:37+08:00</lastmod>
   </url><url>
     <loc>https://nico.moe/posts/</loc>
@@ -23,10 +23,10 @@
     <loc>https://nico.moe/tags/</loc>
     <lastmod>2023-10-20T14:31:37+08:00</lastmod>
   </url><url>
-    <loc>https://nico.moe/tags/database/</loc>
+    <loc>https://nico.moe/categories/database/</loc>
     <lastmod>2023-07-18T16:10:01+08:00</lastmod>
   </url><url>
-    <loc>https://nico.moe/categories/database/</loc>
+    <loc>https://nico.moe/tags/database/</loc>
     <lastmod>2023-07-18T16:10:01+08:00</lastmod>
   </url><url>
     <loc>https://nico.moe/posts/lock_based_concurrency_control_protocol/</loc>
@@ -41,16 +41,16 @@
     <loc>https://nico.moe/posts/network-programming-model/</loc>
     <lastmod>2022-11-16T14:41:51+08:00</lastmod>
   </url><url>
-    <loc>https://nico.moe/tags/os/</loc>
-    <lastmod>2022-11-16T14:41:51+08:00</lastmod>
-  </url><url>
     <loc>https://nico.moe/categories/os/</loc>
     <lastmod>2022-11-16T14:41:51+08:00</lastmod>
   </url><url>
-    <loc>https://nico.moe/tags/default/</loc>
-    <lastmod>1970-01-01T00:00:00+08:00</lastmod>
+    <loc>https://nico.moe/tags/os/</loc>
+    <lastmod>2022-11-16T14:41:51+08:00</lastmod>
   </url><url>
     <loc>https://nico.moe/categories/default/</loc>
+    <lastmod>1970-01-01T00:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nico.moe/tags/default/</loc>
     <lastmod>1970-01-01T00:00:00+08:00</lastmod>
   </url><url>
     <loc>https://nico.moe/posts/hello/</loc>
