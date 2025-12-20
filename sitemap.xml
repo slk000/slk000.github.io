@@ -2,10 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nico.moe/</loc>
-    <lastmod>2024-06-15T18:44:03+08:00</lastmod>
-  </url><url>
     <loc>https://nico.moe/categories/</loc>
+    <lastmod>2023-10-20T14:31:37+08:00</lastmod>
+  </url><url>
+    <loc>https://nico.moe/</loc>
     <lastmod>2023-10-20T14:31:37+08:00</lastmod>
   </url><url>
     <loc>https://nico.moe/categories/golang/</loc>
