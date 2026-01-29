@@ -189,7 +189,7 @@
 <hr>
 <h1 id="factors-affecting-concurrency">Factors Affecting Concurrency</h1>
 <h2 id="number-of-open-files">Number of Open Files</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check</span>
 </span></span><span style="display:flex;"><span>$ ulimit -n
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">1024</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Modify /etc/sysctl.conf</span>
@@ -198,7 +198,7 @@
 </span></span><span style="display:flex;"><span>net.ipv4.netfilter.ip_conntrack_max <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
 </span></span></code></pre></div><h2 id="memory">Memory</h2>
 <p>Memory is needed to allocate buffers for connections.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Minimum allocation value, default allocation value, and maximum allocation value</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Minimum allocation value, default allocation value, and maximum allocation value</span>
 </span></span><span style="display:flex;"><span>$ cat /proc/sys/net/ipv4/tcp_wmem
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">4096</span>    <span style="color:#ae81ff">16384</span>    <span style="color:#ae81ff">4194304</span>
 </span></span><span style="display:flex;"><span>$ cat /proc/sys/net/ipv4/tcp_rmem
