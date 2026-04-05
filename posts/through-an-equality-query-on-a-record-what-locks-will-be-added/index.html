@@ -268,7 +268,7 @@
 </span></span><span style="display:flex;"><span>            LOCK_DATA: supremum pseudo<span style="color:#f92672">-</span>record
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span> <span style="color:#66d9ef">rows</span> <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
 </span></span></code></pre></div><p>MySQL updates by <strong>deleting first and then inserting</strong>, so it is also necessary to be aware of the potential deadlocks that may occur during these two stages.
-<a href="https://mp.weixin.qq.com/s?__biz=MzUxODAzNDg4NQ==&amp;amp;mid=2247524580&amp;amp;idx=1&amp;amp;sn=8032d1de9a45304f91dbb2e6f5a12e0e&amp;amp;chksm=f98d244ecefaad58a21f730cd9f0646b41e20cd16d20e76c97b6de3b081d3554637366746fd3">ref</a></p>
+<a href="https://mp.weixin.qq.com/s?__biz=MzUxODAzNDg4NQ==&amp;mid=2247524580&amp;idx=1&amp;sn=8032d1de9a45304f91dbb2e6f5a12e0e&amp;chksm=f98d244ecefaad58a21f730cd9f0646b41e20cd16d20e76c97b6de3b081d3554637366746fd3">ref</a></p>
 <h1 id="2-updating-records-through-a-unique-non-primary-key-index">2. Updating records through a unique non-primary key index</h1>
 <p>Check the execution plan; it uses the <code>name</code> index.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>  
