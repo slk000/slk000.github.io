@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Default on CyberJunk</title>
-    <link>https://nico.moe/tags/default/</link>
-    <description>Recent content in Default on CyberJunk</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 1970 00:00:00 +0800</lastBuildDate>
-    <atom:link href="https://nico.moe/tags/default/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Hello</title>
-      <link>https://nico.moe/posts/hello/</link>
-      <pubDate>Thu, 01 Jan 1970 00:00:00 +0800</pubDate>
-      <guid>https://nico.moe/posts/hello/</guid>
-      <description>&lt;p&gt;Hello another world.&lt;/p&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>Default on CyberJunk</title>
+		<link>https://nico.moe/tags/default/</link>
+		<description>Recent content in Default on CyberJunk</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Thu, 01 Jan 1970 00:00:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://nico.moe/tags/default/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Hello</title>
+				<link>https://nico.moe/posts/hello/</link>
+				<pubDate>Thu, 01 Jan 1970 00:00:00 +0800</pubDate>
+				<guid>https://nico.moe/posts/hello/</guid>
+				<description>&lt;p&gt;Hello another world.&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>

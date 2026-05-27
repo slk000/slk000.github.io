@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Tags on CyberJunk</title>
-    <link>https://nico.moe/tags/</link>
-    <description>Recent content in Tags on CyberJunk</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 20 Oct 2023 14:31:37 +0800</lastBuildDate>
-    <atom:link href="https://nico.moe/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>GoLang</title>
-      <link>https://nico.moe/tags/golang/</link>
-      <pubDate>Fri, 20 Oct 2023 14:31:37 +0800</pubDate>
-      <guid>https://nico.moe/tags/golang/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Database</title>
-      <link>https://nico.moe/tags/database/</link>
-      <pubDate>Tue, 18 Jul 2023 16:10:01 +0800</pubDate>
-      <guid>https://nico.moe/tags/database/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OS</title>
-      <link>https://nico.moe/tags/os/</link>
-      <pubDate>Wed, 16 Nov 2022 14:41:51 +0800</pubDate>
-      <guid>https://nico.moe/tags/os/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Default</title>
-      <link>https://nico.moe/tags/default/</link>
-      <pubDate>Thu, 01 Jan 1970 00:00:00 +0800</pubDate>
-      <guid>https://nico.moe/tags/default/</guid>
-      <description></description>
-    </item>
-  </channel>
+	<channel>
+		<title>Tags on CyberJunk</title>
+		<link>https://nico.moe/tags/</link>
+		<description>Recent content in Tags on CyberJunk</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Fri, 20 Oct 2023 14:31:37 +0800</lastBuildDate>
+		
+			<atom:link href="https://nico.moe/tags/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>GoLang</title>
+				<link>https://nico.moe/tags/golang/</link>
+				<pubDate>Fri, 20 Oct 2023 14:31:37 +0800</pubDate>
+				<guid>https://nico.moe/tags/golang/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Database</title>
+				<link>https://nico.moe/tags/database/</link>
+				<pubDate>Tue, 18 Jul 2023 16:10:01 +0800</pubDate>
+				<guid>https://nico.moe/tags/database/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>OS</title>
+				<link>https://nico.moe/tags/os/</link>
+				<pubDate>Wed, 16 Nov 2022 14:41:51 +0800</pubDate>
+				<guid>https://nico.moe/tags/os/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Default</title>
+				<link>https://nico.moe/tags/default/</link>
+				<pubDate>Thu, 01 Jan 1970 00:00:00 +0800</pubDate>
+				<guid>https://nico.moe/tags/default/</guid>
+				<description></description>
+			</item>
+	</channel>
 </rss>

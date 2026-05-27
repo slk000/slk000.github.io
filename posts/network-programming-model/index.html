@@ -83,40 +83,40 @@
 <h2 id="read--write">read &amp; write</h2>
 <p>The different behaviors of <code>read</code> and <code>write</code> in blocking and non-blocking modes:</p>
 <table>
-  <thead>
-      <tr>
-          <th>Operation</th>
-          <th>Buffer State</th>
-          <th>Blocking Mode</th>
-          <th style="text-align: left">Non-blocking Mode</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>read</code></td>
-          <td>Data available</td>
-          <td>↩️ Immediately returns</td>
-          <td style="text-align: left">↩️ Immediately returns</td>
-      </tr>
-      <tr>
-          <td>～</td>
-          <td>No data</td>
-          <td>⌛ Waits for data</td>
-          <td style="text-align: left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
-      </tr>
-      <tr>
-          <td><code>write</code></td>
-          <td>Free</td>
-          <td>Writes all before returning</td>
-          <td style="text-align: left">Writes as much as possible, then returns</td>
-      </tr>
-      <tr>
-          <td>～</td>
-          <td>Not free</td>
-          <td>⌛ Waits for free space</td>
-          <td style="text-align: left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>Operation</th>
+					<th>Buffer State</th>
+					<th>Blocking Mode</th>
+					<th style="text-align: left">Non-blocking Mode</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>read</code></td>
+					<td>Data available</td>
+					<td>↩️ Immediately returns</td>
+					<td style="text-align: left">↩️ Immediately returns</td>
+			</tr>
+			<tr>
+					<td>～</td>
+					<td>No data</td>
+					<td>⌛ Waits for data</td>
+					<td style="text-align: left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
+			</tr>
+			<tr>
+					<td><code>write</code></td>
+					<td>Free</td>
+					<td>Writes all before returning</td>
+					<td style="text-align: left">Writes as much as possible, then returns</td>
+			</tr>
+			<tr>
+					<td>～</td>
+					<td>Not free</td>
+					<td>⌛ Waits for free space</td>
+					<td style="text-align: left">Returns, <code>EWOULDBLOCK</code>/<code>EAGAIN</code></td>
+			</tr>
+	</tbody>
 </table>
 <p>Notes:</p>
 <ul>
@@ -154,30 +154,30 @@
 </ol>
 <p><strong>Differences</strong>:</p>
 <table>
-  <thead>
-      <tr>
-          <th></th>
-          <th>select</th>
-          <th>poll</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>FD storage</td>
-          <td>Uses a bitmap of size 1K</td>
-          <td>Uses an array of <code>pollfd</code> structures</td>
-      </tr>
-      <tr>
-          <td>Event description method</td>
-          <td>Uses three FD bitmaps to represent different event types</td>
-          <td>Sets events in the <code>pollfd</code> structure</td>
-      </tr>
-      <tr>
-          <td>How notify</td>
-          <td>The kernel modifies the passed bitmap</td>
-          <td>The kernel modifies specific fields in the <code>pollfd</code> structure</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th></th>
+					<th>select</th>
+					<th>poll</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>FD storage</td>
+					<td>Uses a bitmap of size 1K</td>
+					<td>Uses an array of <code>pollfd</code> structures</td>
+			</tr>
+			<tr>
+					<td>Event description method</td>
+					<td>Uses three FD bitmaps to represent different event types</td>
+					<td>Sets events in the <code>pollfd</code> structure</td>
+			</tr>
+			<tr>
+					<td>How notify</td>
+					<td>The kernel modifies the passed bitmap</td>
+					<td>The kernel modifies specific fields in the <code>pollfd</code> structure</td>
+			</tr>
+	</tbody>
 </table>
 <p>Improvement🤔: 1. Do not need to copy all FDs; 2. The kernel can indicate available FDs. Here comes the epoll👇</p>
 <h2 id="epoll">epoll</h2>

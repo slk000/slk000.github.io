@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Categories on CyberJunk</title>
-    <link>https://nico.moe/categories/</link>
-    <description>Recent content in Categories on CyberJunk</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 20 Oct 2023 14:31:37 +0800</lastBuildDate>
-    <atom:link href="https://nico.moe/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>GoLang</title>
-      <link>https://nico.moe/categories/golang/</link>
-      <pubDate>Fri, 20 Oct 2023 14:31:37 +0800</pubDate>
-      <guid>https://nico.moe/categories/golang/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Database</title>
-      <link>https://nico.moe/categories/database/</link>
-      <pubDate>Tue, 18 Jul 2023 16:10:01 +0800</pubDate>
-      <guid>https://nico.moe/categories/database/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>OS</title>
-      <link>https://nico.moe/categories/os/</link>
-      <pubDate>Wed, 16 Nov 2022 14:41:51 +0800</pubDate>
-      <guid>https://nico.moe/categories/os/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Default</title>
-      <link>https://nico.moe/categories/default/</link>
-      <pubDate>Thu, 01 Jan 1970 00:00:00 +0800</pubDate>
-      <guid>https://nico.moe/categories/default/</guid>
-      <description></description>
-    </item>
-  </channel>
+	<channel>
+		<title>Categories on CyberJunk</title>
+		<link>https://nico.moe/categories/</link>
+		<description>Recent content in Categories on CyberJunk</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Fri, 20 Oct 2023 14:31:37 +0800</lastBuildDate>
+		
+			<atom:link href="https://nico.moe/categories/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>GoLang</title>
+				<link>https://nico.moe/categories/golang/</link>
+				<pubDate>Fri, 20 Oct 2023 14:31:37 +0800</pubDate>
+				<guid>https://nico.moe/categories/golang/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Database</title>
+				<link>https://nico.moe/categories/database/</link>
+				<pubDate>Tue, 18 Jul 2023 16:10:01 +0800</pubDate>
+				<guid>https://nico.moe/categories/database/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>OS</title>
+				<link>https://nico.moe/categories/os/</link>
+				<pubDate>Wed, 16 Nov 2022 14:41:51 +0800</pubDate>
+				<guid>https://nico.moe/categories/os/</guid>
+				<description></description>
+			</item>
+			<item>
+				<title>Default</title>
+				<link>https://nico.moe/categories/default/</link>
+				<pubDate>Thu, 01 Jan 1970 00:00:00 +0800</pubDate>
+				<guid>https://nico.moe/categories/default/</guid>
+				<description></description>
+			</item>
+	</channel>
 </rss>
