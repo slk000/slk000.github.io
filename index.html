@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.166.0">
+	<meta name="generator" content="Hugo 0.167.0">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -164,6 +164,17 @@
 </li>
 <li>
 <p>When try to write, if the data cannot be written (e.g., buffer is full), OS blocks and waits until it can write.</p>
+</li>
+<li>
+<p><strong>Pros</strong> ✔️: Simple to implement. Since the call blocks the thread, usually, one thread is allocated to handle with one client connection, and it simply sleeps while waiting for data.</p>
+</li>
+<li>
+<p><strong>Cons</strong> ❌: Limited number of concurrent connections because thread resources are limited, and context switching among threads has a cost.</p>
+</li>
+<li>
+<p><strong>Improvement</strong> 🤔: The crux of blocking I/O is the &ldquo;blocking,&rdquo; thus leading to <strong>Non-blocking I/O (NIO)</strong> 👇</p>
+</li>
+</ul>
 		
 			<a href="https://nico.moe/posts/network-programming-model/">Read more...</a>
 		
